@@ -27,7 +27,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void SpawnCar()
     {
-
+        var currentCar = Instantiate(_carPrefab, _carPrefab.transform.position, Quaternion.identity);
+        currentCar.GetComponent<MenuCar>().Init();
     }
 
     #region BUTTON_FUNCTION

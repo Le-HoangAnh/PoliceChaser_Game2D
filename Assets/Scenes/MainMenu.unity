@@ -4268,7 +4268,7 @@ MonoBehaviour:
   _openHelpPanel: {fileID: 1677352951}
   _settingsPanel: {fileID: 938922446}
   _storePanel: {fileID: 360549091}
-  _carPrefab: {fileID: 427053013}
+  _carPrefab: {fileID: 3067010342415544746, guid: 2be1cfce960253447bf6cf0d1edbdab1, type: 3}
   _settingsMusic: {fileID: 1305882067}
   _settingsSound: {fileID: 1260600854}
   _settingsShake: {fileID: 779576634}
