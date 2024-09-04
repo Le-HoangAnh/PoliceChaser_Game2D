@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         _pausePanel.SetActive(false);
         _inputPanel.SetActive(false);
         _storePanel.SetActive(false);
+        EventManager.TriggerEvent(Constants.EventNames.REFRESH_COIN, null);
     }
 
     public void StartGame()
@@ -72,4 +73,44 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
     }
+
+    public void GameOver()
+    {
+        _gameActiveUI.SetActive(false);
+        _inputPanel.SetActive(false);
+        _gameEndUI.SetActive(true);
+        EventManager.TriggerEvent(Constants.EventNames.GAME_OVER, null);
+        EventManager.TriggerEvent(Constants.EventNames.UPDATE_ITEM, null);
+    }
+
+    public void AddCoins()
+    {
+        PlayerPrefs.SetInt(Constants.Data.COIN, 10000);
+        EventManager.TriggerEvent(Constants.EventNames.REFRESH_COIN, null);
+    }
+
+    public void AddScore()
+    {
+        PlayerPrefs.SetInt(Constants.Data.SCORE, 10000);
+        EventManager.TriggerEvent(Constants.EventNames.REFRESH_SCORE, null);
+    }
+
+    public void OpenStore()
+    {
+        _storePanel.SetActive(true);
+    }
+
+    public void CloseStore()
+    {
+        _storePanel.SetActive(false);
+    }
+}
+
+[System.Serializable]
+public struct UpgradeData
+{
+    public string type;
+    public int level;
+    public int cost;
+    public float value;
 }

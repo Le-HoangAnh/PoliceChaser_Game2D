@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _moveStartForce = 24f;
-        _startTorque = _moveStartForce * 1200 / 24;
+        _startTorque = _moveStartForce * 1200 / 24f;
         _appliedForce = _moveStartForce;
         _appliedTorque = _startTorque;
         _boostForce = 1.5f * _moveStartForce;
@@ -95,10 +95,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_canMove) return;
-        _rb.velocity = _rb.velocity * 0.99f;
+        _rb.velocity = _rb.velocity * 0.85f;
         Vector3 moveDirection = _directionObject.position - transform.position;
         _rb.AddForce(moveDirection * _appliedForce);
-        _rb.angularVelocity = _rb.angularVelocity * 0.95f;
+        _rb.angularVelocity = _rb.angularVelocity * 0.85f;
 
         if (Mathf.Abs(_input) > 0.05f)
         {
@@ -121,5 +121,33 @@ public class Player : MonoBehaviour
     private void StartGame(Dictionary<string, object> message)
     {
         _canMove = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag(Constants.Tags.ENEMY))
+        {
+            if (_isRevengeMode) return;
+
+            if (_isShieldOn) return;
+
+            _currentHealth--;
+
+            if (_currentHealth == 0)
+            {
+
+            }
+            else
+            {
+                _canMove = false;
+                GameManager.Instance.GameOver();
+                Destroy(gameObject, 2f);
+            }
+
+            EventManager.TriggerEvent(Constants.EventNames.UPDATE_HEALTH, new Dictionary<string, object>()
+            {
+                {Constants.ScoreMessage.AMOUNT, _currentHealth }
+            });
+        }
     }
 }
