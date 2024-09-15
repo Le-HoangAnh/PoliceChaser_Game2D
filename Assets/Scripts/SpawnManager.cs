@@ -1,36 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _coinPrefab, _enemyPrefab;
+    [SerializeField]
+    private GameObject _coinPrefab, _enemyPrefab;
 
-    [SerializeField] private List<GameObject> _powerUps;
+    [SerializeField]
+    private List<GameObject> _powerUps;
 
-    [HideInInspector] public List<GameObject> _tempEnemies = new List<GameObject>();
+    [HideInInspector]
+    public List<GameObject> _tempEnemies = new List<GameObject>()
+    {       
+    };
 
     private void OnEnable()
     {
         EventManager.StartListening(Constants.EventNames.GAME_START, StartSpawning);
-        EventManager.StartListening(Constants.EventNames.GAME_OVER, StopSpawning);
+        EventManager.StartListening(Constants.EventNames.GAME_OVER, StoptSpawning);
         EventManager.StartListening(Constants.EventNames.SPAWN_COIN, SpawnCoin);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening(Constants.EventNames.GAME_START, StartSpawning);
-        EventManager.StopListening(Constants.EventNames.GAME_OVER, StopSpawning);
+        EventManager.StopListening(Constants.EventNames.GAME_OVER, StoptSpawning);
         EventManager.StopListening(Constants.EventNames.SPAWN_COIN, SpawnCoin);
     }
 
-    private void StartSpawning(Dictionary<string, object> message)
+    private void StartSpawning(Dictionary<string,object> message)
     {
         InvokeRepeating("SpawnEnemy", 0f, UnityEngine.Random.Range(1.5f, 3.5f));
         InvokeRepeating("SpawnPowerUp", 5f, 10f);
     }
 
-    private void StopSpawning(Dictionary<string, object> message)
+    private void StoptSpawning(Dictionary<string, object> message)
     {
         CancelInvoke("SpawnEnemy");
         CancelInvoke("SpawnPowerUp");
@@ -65,14 +69,13 @@ public class SpawnManager : MonoBehaviour
                 tempOffsetDirection = new Vector3(0, 0, 0);
                 break;
         }
-
         tempOffsetDirection *= 10f;
-        tempOffsetDirection += GameManager.Instance._player.transform.position;
-        var current = Instantiate(powerUp, tempOffsetDirection, Quaternion.identity) as GameObject;
+        tempOffsetDirection += GameManager.instance._player.transform.position;
+        var current = Instantiate(powerUp, tempOffsetDirection, Quaternion.identity);
         Destroy(current, 10f);
     }
 
-    private void SpawnCoin(Dictionary<string, object> message)
+    private void SpawnCoin(Dictionary<string,object> message)
     {
         var tempCoin = Instantiate(_coinPrefab, (Vector3)message[Constants.ScoreMessage.POSITION], Quaternion.identity);
         Destroy(tempCoin, 5f);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private Transform _player;
     private Vector3 _offset;
     private bool _hasGameFinished;
@@ -31,8 +31,9 @@ public class CameraFollow : MonoBehaviour
         transform.position = _player.position + _offset;
     }
 
-    private void GameOver(Dictionary<string, object> message)
+    private void GameOver(Dictionary<string,object> message)
     {
         _hasGameFinished = true;
     }
+
 }

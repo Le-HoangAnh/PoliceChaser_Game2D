@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
+    #region VARIABLES
     [SerializeField]
     private GameObject _openHelpPanel, _settingsPanel, _storePanel, _carPrefab;
 
     [SerializeField]
-    private Image _settingsMusic, _settingsSound, _settingsShake;
+    private Image _setttingsMusic, _settings_Sound, _settingsShake;
+    #endregion
 
+    #region START_METHODS
     private void Awake()
     {
         _openHelpPanel.SetActive(false);
@@ -30,16 +34,17 @@ public class MainMenuManager : MonoBehaviour
         var currentCar = Instantiate(_carPrefab, _carPrefab.transform.position, Quaternion.identity);
         currentCar.GetComponent<MenuCar>().Init();
     }
+    #endregion
 
     #region BUTTON_FUNCTION
     public void OpenFacebook()
     {
-        Application.OpenURL("");
+        Application.OpenURL("https://www.facebook.com/zerefgd/");
     }
 
     public void OpenInstagram()
     {
-        Application.OpenURL("");
+        Application.OpenURL("https://www.instagram.com/zerefgd/");
     }
 
     public void OpenHelpPanel()
@@ -51,36 +56,6 @@ public class MainMenuManager : MonoBehaviour
     {
         _openHelpPanel.SetActive(false);
     }
-
-    #region SETTINGS_BUTTON
-    public void OpenSettingsPanel()
-    {
-        _settingsPanel.SetActive(true);
-        SetSettingsButton(_settingsMusic, Constants.Settings.SETTINGS_MUSIC);
-        SetSettingsButton(_settingsSound, Constants.Settings.SETTINGS_SOUND);
-        SetSettingsButton(_settingsShake, Constants.Settings.SETTINGS_SHAKE);
-    }
-
-    public void ClickSwitchMusic()
-    {
-        SwitchSettingsButton(_settingsMusic, Constants.Settings.SETTINGS_MUSIC);
-    }
-
-    public void ClickSwitchSound()
-    {
-        SwitchSettingsButton(_settingsSound, Constants.Settings.SETTINGS_SOUND);
-    }
-
-    public void ClickSwitchShake()
-    {
-        SwitchSettingsButton(_settingsShake, Constants.Settings.SETTINGS_SHAKE);
-    }
-
-    public void CloseSettingsPanel()
-    {
-        _settingsPanel.SetActive(false);
-    }
-    #endregion
 
     public void OpenStorePanel()
     {
@@ -94,16 +69,46 @@ public class MainMenuManager : MonoBehaviour
 
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Gameplay");
+    }
+
+    public void OpenSettings()
+    {
+        _settingsPanel.SetActive(true);
+        SetSettingsButton(_setttingsMusic, Constants.Settings.SETTINGS_MUSIC);
+        SetSettingsButton(_settings_Sound, Constants.Settings.SETTINGS_SOUND);
+        SetSettingsButton(_settingsShake, Constants.Settings.SETTINGS_SHAKE);
+    }
+
+    public void ClickSwitchMusic()
+    {
+        SwitchSettingsButton(_setttingsMusic, Constants.Settings.SETTINGS_MUSIC);
+        SoundManager.instance.SetMusic();
+    }
+
+    public void ClickSwitchSound()
+    {
+        SwitchSettingsButton(_settings_Sound, Constants.Settings.SETTINGS_SOUND);
+        SoundManager.instance.SetEffect();
+    }
+
+    public void ClickSwitchShake()
+    {
+        SwitchSettingsButton(_settingsShake, Constants.Settings.SETTINGS_SHAKE);        
+    }
+
+    public void CloseSettings()
+    {
+        _settingsPanel.SetActive(false);
     }
 
     #endregion
 
     #region HELPER_FUNCTION
-    void SetSettingsButton(Image currentImage, string key)
+    void SetSettingsButton(Image currentImage,string key)
     {
         int result;
-        if (PlayerPrefs.HasKey(key))
+        if(PlayerPrefs.HasKey(key))
         {
             result = PlayerPrefs.GetInt(key);
         }
@@ -130,6 +135,5 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetInt(key, result);
         currentImage.color = result == 1 ? Color.white : Color.gray;
     }
-
     #endregion
 }

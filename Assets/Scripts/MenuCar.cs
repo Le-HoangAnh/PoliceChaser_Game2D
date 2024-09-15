@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class MenuCar : MonoBehaviour
 {
-    [SerializeField] private List<Sprite> _cars;
-    [SerializeField] private List<Gradient> _colors;
+    [SerializeField]
+    private List<Sprite> _cars;
+
+    [SerializeField]
+    private List<Gradient> _colors;
 
     private Vector3 _startPos;
     private TrailRenderer _trailRenderer;
 
     public void Init()
     {
-        Vector2 spawnPos = UnityEngine.Random.Range(0, 2) == 0 ? 
-            new Vector2 (UnityEngine.Random.Range(-6, 6), 0) : 
-            new Vector2 (0, UnityEngine.Random.Range(-10, 10));
+        Vector2 spawnPos = UnityEngine.Random.Range(0, 2) == 0 ? new Vector2(UnityEngine.Random.Range(-6,6),0) :
+            new Vector2(0, UnityEngine.Random.Range(-10, 10));
         transform.Translate(spawnPos);
         transform.Translate(new Vector2(-1, -1) * UnityEngine.Random.Range(20, 50));
         transform.eulerAngles = new Vector3(0, 0, -45);
@@ -29,7 +30,7 @@ public class MenuCar : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.x > 18f || transform.position.y > 20f)
+        if(transform.position.x > 18f || transform.position.y > 20f)
         {
             _trailRenderer.enabled = false;
             transform.position = _startPos;
