@@ -80,11 +80,11 @@ public class ScoreManager : MonoBehaviour
     {
         _hasGameFinished = true;
         int tempScore = (int)_score;
-        _endScoreText.text = "SCORE "  + tempScore.ToString() + " PTS";
+        _endScoreText.text = "SCORE: "  + tempScore.ToString() + " PTS";
         int totalScore = PlayerPrefs.HasKey(Constants.Data.SCORE) ? PlayerPrefs.GetInt(Constants.Data.SCORE) : 0;
         totalScore += tempScore;
         PlayerPrefs.SetInt(Constants.Data.SCORE,totalScore);
-        _totalScoreText.text = totalScore.ToString() + " PTS";        
+        _totalScoreText.text = totalScore.ToString() + " PTS";
     }
 
     private void UpdateScore(Dictionary<string,object> message)

@@ -118,9 +118,9 @@ public class StoreManager : MonoBehaviour
         if (isAlreadyBought == 1) return;
 
         int coins = PlayerPrefs.HasKey(Constants.Data.COIN) ? PlayerPrefs.GetInt(Constants.Data.COIN) : 0;
-        if (coins < 2000) return;
+        if (coins < 200) return;
 
-        coins -= 2000;
+        coins -= 200;
         PlayerPrefs.SetInt(_CURRENTLY_SELECTED, 1);
         PlayerPrefs.SetInt(Constants.Data.COIN, coins);
 

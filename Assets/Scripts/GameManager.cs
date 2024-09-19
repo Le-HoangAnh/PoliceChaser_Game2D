@@ -222,18 +222,6 @@ public class GameManager : MonoBehaviour
         EventManager.TriggerEvent(Constants.EventNames.UPDATE_ITEM, null);
     }
 
-    public void AddCoins()
-    {
-        PlayerPrefs.SetInt(Constants.Data.COIN, 100);
-        EventManager.TriggerEvent(Constants.EventNames.REFRESH_COIN, null);
-    }
-
-    public void AddScore()
-    {
-        PlayerPrefs.SetInt(Constants.Data.SCORE, 1000);
-        EventManager.TriggerEvent(Constants.EventNames.UPDATE_ITEM, null);
-    }
-
     public void OpenStore()
     {
         _storePanel.SetActive(true);
